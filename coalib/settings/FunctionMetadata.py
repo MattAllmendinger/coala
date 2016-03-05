@@ -176,7 +176,7 @@ class FunctionMetadata:
             Raised when less than 2 metadatas are provided.
         :return:
             A ``FunctionMetadata`` object containing the merged signature of
-            all given ones.
+            all given metadatas.
         """
         # Collect the metadatas, as we operate on them more often and we want
         # to support arbitrary sequences.
