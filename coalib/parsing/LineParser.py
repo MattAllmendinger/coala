@@ -1,5 +1,5 @@
 from coalib.misc.StringConverter import StringConverter
-from coalib.parsing.StringProcessing import unescape
+from coalib.parsing.StringProcessing import unescape, convert_to_raw
 
 
 class LineParser:
@@ -62,8 +62,16 @@ class LineParser:
         # Escapes in value might be needed by the bears
         keys, value = self.__extract_keys_and_value(line)
 
+        all_delimiters = self.key_value_delimiters
+        all_delimiters += self.key_delimiters
+        all_delimiters += self.comment_seperators
+        all_delimiters += self.section_override_delimiters
+        all_delimiters = "".join(all_delimiters)
+        value = convert_to_raw(value, all_delimiters)
+
         key_touples = []
         for key in keys:
+            key = convert_to_raw(key, all_delimiters)
             section, key = self.__seperate_by_first_occurrence(
                 key,
                 self.section_override_delimiters,
