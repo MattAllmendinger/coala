@@ -12,6 +12,10 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.FunctionMetadata import FunctionMetadata
 
 
+# TODO SanketDG's check_prerequisites refactoring!!!
+# TODO https://github.com/coala-analyzer/coala/commit/6397b3a15aae21c2f37ad431fb1d52fc4f0db002
+# TODO --> Copy some of the docs?
+
 @enforce_signature
 def Linter(executable: str,
            provides_correction: bool=False,
