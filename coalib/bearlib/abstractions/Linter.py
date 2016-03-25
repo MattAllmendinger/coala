@@ -16,6 +16,27 @@ from coalib.results.RESULT_SEVERITY import RESULT_SEVERITY
 from coalib.settings.FunctionMetadata import FunctionMetadata
 
 
+# TODO Doctests: Adjust: plain executable does not work!
+
+# TODO Afterwork improvements:
+# TODO - Allow to leave out mandatory arguments if unused? Affects
+# TODO   create_arguments, generate_config and process_output
+# TODO - Use metaclass that overrides __repr__
+# TODO - static property for get_executable()
+# TODO - prerequisite_check_command: Remove and let the user override it
+# TODO   himself + provide helper utilities (advanced custom command check,
+# TODO   derivations for specific stuff (java module check etc.)
+# TODO - Enum for output_format?
+# TODO - csv output parser + integrate into bears that use csv
+# TODO - concept for a generic json output parser
+# TODO - bears: Use regex-format placeholders (maybe use validators?)
+# TODO - Move out result-from-diff generator, but without removing the `self`
+# TODO   passing in the result, this isn't possible. next-gen design would help
+# TODO - enable multiline mode? or provide an extra field for match flags?
+# TODO - Issue for bears to advertise "path" type more for run-parameters!
+# TODO - More intelligent metadata-merge that is not so merge-order-sensitive
+
+
 @enforce_signature
 def Linter(executable: str,
            use_stdin: bool=False,
