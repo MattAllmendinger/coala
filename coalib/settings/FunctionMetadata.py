@@ -160,3 +160,53 @@ class FunctionMetadata:
                    non_optional_params=non_optional_params,
                    optional_params=optional_params,
                    omit=omit)
+
+    @classmethod
+    def merge(cls, *metadatas):
+        """
+        Merges signatures of ``FunctionMetadata`` objects.
+
+        Parameter descriptions (either optional or non-optional) are merged
+        from left to right, meaning the right hand metadata overrides the left
+        hand one.
+
+        :param metadatas:
+            The sequence of metadatas to merge.
+        :raises ValueError:
+            Raised when less than 2 metadatas are provided.
+        :return:
+            A ``FunctionMetadata`` object containing the merged signature of
+            all given ones.
+        """
+        # Collect the metadatas, as we operate on them more often and we want
+        # to support arbitrary sequences.
+        metadatas = tuple(metadatas)
+        if len(metadatas) < 2:
+            raise ValueError("Less than 2 metadata objects provided.")
+
+        merged_name = ("<Merged signature of " +
+                       ", ".join(repr(metadata.name)
+                                 for metadata in metadatas) +
+                       ">")
+
+        merged_desc = "\n".join("{}:\n{}".format(metadata.name, metadata.desc)
+                                for metadata in metadatas)
+
+        merged_retval_desc = "\n".join(
+            "{}:\n{}".format(metadata.name, metadata.retval_desc)
+            for metadata in metadatas)
+
+        merged_non_optional_params = {}
+        merged_optional_params = {}
+        for metadata in metadatas:
+            merged_non_optional_params.update(metadata.non_optional_params)
+            merged_optional_params.update(metadata.optional_params)
+
+        merged_omit = set.union(*(metadata.omit for metadata in metadatas))
+
+        return cls(merged_name,
+                   merged_desc,
+                   merged_retval_desc,
+                   merged_non_optional_params,
+                   merged_optional_params,
+                   merged_omit)
